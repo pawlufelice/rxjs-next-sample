@@ -8,8 +8,8 @@ type Props = {};
 const MyForm = (props: Props) => {
   const [curr, setCurr] = useState<string>("EUR");
 
-  const data = useGetDataRx(curr);
-//   const data2 = useGetData(curr);
+//   const data = useGetDataRx(curr);
+  const data = useGetData(curr);
 
   return (
     <div>

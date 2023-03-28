@@ -1,11 +1,15 @@
+'use client'
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "./page.module.css";
 import MyForm from "./components/form";
+import { useMemo, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const [numberOfForms, setNumberOfForms] = useState<number>(1);
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -31,10 +35,20 @@ export default function Home() {
           </a>
         </div>
       </div>
+      {useMemo(
+        () =>
+          Array(numberOfForms)
+            .fill(0)
+            .map((_, i) => <MyForm key={i} />),
+        [numberOfForms]
+      )}
 
-      <MyForm />
-      <MyForm />
-      <MyForm />
+      <button onClick={() => setNumberOfForms(x => ++x)}>
+        Add form
+      </button>
+      <button onClick={() => setNumberOfForms(x => --x)}>
+        Remove form
+      </button>
 
       <div className={styles.grid}>
         <a

@@ -3,14 +3,14 @@ import { type CurrencyData } from "@rxjs-sample/app/api/hello/route";
 import { memoizeWith } from "ramda";
 import { useEffect, useState } from "react";
 
-import { interval, share, startWith, switchMap } from "rxjs";
+import { interval, shareReplay, startWith, switchMap } from "rxjs";
 
 const currencyData = memoizeWith(String, (curr) =>
   interval(4000).pipe(
-    startWith(1),
+    startWith(null),
     switchMap(() => fetch(`/api/hello?currency=${curr}`)),
     switchMap((res) => res.json()),
-    share()
+    shareReplay({ refCount: true, bufferSize: 1 })
   )
 );
 
